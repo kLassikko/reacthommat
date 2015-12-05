@@ -1,0 +1,24 @@
+{
+  "name": "reacthommat",
+  "version": "1.0.0",
+  "description": "esitehtava",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lassi Väisänen",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.0.12",
+    "babel-loader": "^6.0.1",
+    "babel-preset-es2015": "^6.0.12",
+    "babel-preset-react": "^6.0.15",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
+  }
+}

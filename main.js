@@ -1,0 +1,1 @@
+import Hommat from './src/js/hommat.jsx';
