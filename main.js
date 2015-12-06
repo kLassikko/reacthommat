@@ -1,1 +1,1 @@
-import Hommat from './src/js/hommat.jsx';
+import App from './src/js/app.jsx';
