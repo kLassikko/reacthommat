@@ -2,15 +2,14 @@ import Selector from './selector.jsx';
 import ItemList from './itemList.jsx';
 
 var ItemForm = React.createClass({
-  getInitialState: function() {
-    return {text: '', selectOne: '', selectTwo: '', selectThree: '', selectorLevel: 1, data: []};
-  },
-  handleTextChange: function(e) {
+  getInitialState: () => ({text: '', selectOne: '', selectTwo: '', selectThree: '', 
+                          selectorLevel: 1, data: []}),
+  handleTextChange(e) {
     this.setState({text: e.target.value});
   },
   //save selector value on change to state
   //reset following selectors' values (in nextSs) and load values to the immediate next one
-  handleSelect: function(thisSelector, nextSs, selectorLevel, data) {
+  handleSelect(thisSelector, nextSs, selectorLevel, data) {
     this.state[thisSelector] = data.value;
     this.setState({selectorLevel: selectorLevel})
     for(let i in nextSs){
@@ -20,7 +19,7 @@ var ItemForm = React.createClass({
       }
     }
   },
-  handleSubmit: function(e) {
+  handleSubmit(e) {
     e.preventDefault();
     if (this.state.selectorLevel < 4) {
       return;
@@ -33,7 +32,7 @@ var ItemForm = React.createClass({
                 };
     //prevent duplicate items
     var duplicate = false;
-    this.props.data.map(function(item){
+    this.props.data.map((item) => {
       if(newItem.text == item.text && 
          newItem.selectOne == item.selectOne &&
          newItem.selectTwo == item.selectTwo &&
@@ -54,14 +53,14 @@ var ItemForm = React.createClass({
     this.refs.selectorOne.loadOptions();
     this.refs.selectorOne.resetValue();
   },
-  deleteItem: function(item){
+  deleteItem(item){
     this.state.data.splice(this.state.data.indexOf(item), 1);
     this.props.onDelete(item);
   },
-  componentDidMount: function() {
+  componentDidMount() {
     this.refs.selectorOne.loadOptions();
   },
-  render: function() {
+  render() {
     return (
       <div className="itemForm" >
       <form className="form-horizontal" onSubmit={this.handleSubmit}>

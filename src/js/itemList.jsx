@@ -1,12 +1,12 @@
 var ItemList = React.createClass({
-  deleteItem: function(item, e) {
+  deleteItem(item, e) {
     e.preventDefault();
     this.props.onDelete(item);
   },
-  render: function() {
+  render() {
     var deleteLink;
     
-    var itemNodes = this.props.data.map(function(item) {
+    var itemNodes = this.props.data.map((item) => {
       if(this.props.deletable){
         deleteLink = <a href='' onClick={this.deleteItem.bind(null, item)}>poista</a>;
       }
@@ -19,7 +19,7 @@ var ItemList = React.createClass({
             <td>{deleteLink}</td>
         </tr>
       );
-    }, this);
+    });
     return (
       <table className="table table-striped"><thead><tr><th>Alasveto1</th><th>Alasveto2</th>
       <th>Alasveto3</th><th>Tekstikenttä</th><th> </th></tr></thead>
@@ -32,7 +32,7 @@ var ItemList = React.createClass({
 });
 
 var Item = React.createClass({
-  render: function() {
+  render() {
     return (
       <div className="item">
         {this.props.children}

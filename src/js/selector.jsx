@@ -1,24 +1,22 @@
 var Selector = React.createClass({
-  getInitialState: function() {
-    return {value: '', options: []};
-  },
-  handleSelectChange: function(e) {
+  getInitialState:() => ({value: '', options: []}),
+  handleSelectChange (e) {
     this.setState({value: e.target.value});
     this.props.onSelectChange({value: e.target.value});
   },
-  loadOptions: function() {
-    var options = this.props.options.map(function(option) {
+  loadOptions() {
+    var options = this.props.options.map((option) => {
       return (<option key={option.id} value={option.value}> {option.text} </option>);
     });
     this.setState({options: options});
   },
-  flushOptions: function() {
+  flushOptions() {
     this.setState({options: []});
   },
-  resetValue: function() {
+  resetValue() {
     this.setState({value: ''});
   },
-  render: function() {
+  render() {
     return (
       <select className="form-control" value={this.state.value} onChange={this.handleSelectChange} 
       disabled={this.props.disabled}>

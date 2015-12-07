@@ -1,11 +1,9 @@
 var OptionForm = React.createClass({
-  getInitialState: function() {
-    return {text: ''};
-  },
-  handleTextChange: function(e) {
+  getInitialState:() => ({text: ''}),
+  handleTextChange(e) {
     this.setState({text: e.target.value});
   },
-  handleSubmit: function(e) {
+  handleSubmit(e) {
     e.preventDefault();
     var text = this.state.text.trim();
     if (!text) {
@@ -13,7 +11,7 @@ var OptionForm = React.createClass({
     }
     //prevent duplicate options
     var duplicate = false;
-    this.props.options.map(function(option){
+    this.props.options.map((option) => {
       if(text == option.text){
         duplicate = true
         return;
@@ -25,7 +23,7 @@ var OptionForm = React.createClass({
     this.props.onOptionSubmit({text: text});
     this.setState({text: ''});
   },
-  render: function() {
+  render() {
     return (
       <div className="optionForm">
         <form className="form-horizontal" onSubmit={this.handleSubmit}>

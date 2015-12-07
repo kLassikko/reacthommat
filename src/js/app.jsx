@@ -3,34 +3,34 @@ import ItemList from './itemList.jsx';
 import ItemForm from './itemForm.jsx';
 
 var App = React.createClass({
-  refresh: function() {
+  refresh() {
   	this.setState({data: this.props.data});
     this.setState({options: this.props.options});
   },
-  newComment: function(comment){
+  newComment(comment){
   	this.state.data.push(comment);
   	this.refresh();
   },
-  deleteItem: function(item){
+  deleteItem(item){
     this.state.data.splice(this.state.data.indexOf(item), 1);
     this.refresh();
   },
-  newOption: function(option){
+  newOption(option){
     option.id = Date.now();
     option.value = option.text;
     this.state.options.push(option);
     this.refresh();
   },
-  changeView: function(viewName, e){
+  changeView(viewName, e){
     this.setState({currentPage: viewName});
   },
-  getInitialState: function() {
+  getInitialState() {
     return {data: [], options: [], currentPage: ''};
   },
-  componentDidMount: function() {
+  componentDidMount() {
     this.refresh();
   },
-  render: function() {
+  render() {
     var partial;
     if (this.state.currentPage === 'tallentaminen') {
       partial =<div><h1>Tallentaminen</h1>
