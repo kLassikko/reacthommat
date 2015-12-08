@@ -21,12 +21,14 @@ var ItemList = React.createClass({
       );
     });
     return (
+      <div>
       <table className="table table-striped"><thead><tr><th>Alasveto1</th><th>Alasveto2</th>
       <th>Alasveto3</th><th>Tekstikenttä</th><th> </th></tr></thead>
         <tbody>
         {itemNodes}
         </tbody>
       </table>
+      </div>
     );
   }
 });

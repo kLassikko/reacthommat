@@ -1,68 +1,70 @@
 import OptionForm from './optionForm.jsx';
 import ItemList from './itemList.jsx';
 import ItemForm from './itemForm.jsx';
+import { Router, Route, Link } from 'react-router';
+import createHistory from 'history/lib/createHashHistory';
 
 var App = React.createClass({
-  refresh() {
-  	this.setState({data: this.props.data});
-    this.setState({options: this.props.options});
-  },
   newComment(comment){
   	this.state.data.push(comment);
-  	this.refresh();
   },
   deleteItem(item){
     this.state.data.splice(this.state.data.indexOf(item), 1);
-    this.refresh();
   },
   newOption(option){
     option.id = Date.now();
     option.value = option.text;
     this.state.options.push(option);
-    this.refresh();
   },
   changeView(viewName, e){
     this.setState({currentPage: viewName});
   },
   getInitialState() {
-    return {data: [], options: [], currentPage: ''};
-  },
-  componentDidMount() {
-    this.refresh();
+    return {data: [], options: [{id: 0, value: '', text: ''}, {id: 1, value: 'Arvo1', text: 'Arvo1'}, 
+                {id: 2, value: 'Arvo2', text: 'Arvo2'}, {id: 3, value: 'Arvo3', text: 'Arvo3'}]};
   },
   render() {
-    var partial;
-    if (this.state.currentPage === 'tallentaminen') {
-      partial =<div><h1>Tallentaminen</h1>
-        <ItemForm options={this.state.options} data={this.state.data} 
-        onCommentSubmit={this.newComment} onDelete={this.deleteItem} /></div>;
-    } else if (this.state.currentPage === 'hallitseminen') {
-      partial = <div><h1>Hallitseminen</h1>
-        <OptionForm options={this.state.options} 
-        onOptionSubmit={this.newOption} /></div>;
-    } else if (this.state.currentPage === 'tarkasteleminen'){
-      partial = <div><h1>Tarkasteleminen</h1>
-        <ItemList data={this.state.data} /></div>;
-    }
     return (
-      <div id="header">
-        <button className="btn btn-xs btn-primary" 
-        onClick={this.changeView.bind(null, 'tallentaminen')}>Tallentaminen</button>
-        <button className="btn btn-xs btn-primary" 
-        onClick={this.changeView.bind(null, 'hallitseminen')}>Hallitseminen</button>
-        <button className="btn btn-xs btn-primary" 
-        onClick={this.changeView.bind(null, 'tarkasteleminen')}>Tarkasteleminen</button>
-        {partial}
+      <div>
+        <nav className="navbar navbar-inverse navbar-fixed-top">
+          <div className="container">
+            <div className="navbar-header">
+              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" 
+                      data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
+              </button>
+              <a className="navbar-brand" href="#">Homma</a>
+            </div>
+            <div id="navbar" className="collapse navbar-collapse">
+              <ul className="nav navbar-nav">
+                <li><Link to="/tallentaminen" activeClassName="active">tallentaminen</Link></li>
+                <li><Link to="/hallitseminen" activeClassName="active">hallitseminen</Link></li>
+                <li><Link to="/tarkasteleminen" activeClassName="active">tarkasteleminen</Link></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        {React.cloneElement(this.props.children, {data: this.state.data, options: this.state.options,
+          onCommentSubmit: this.newComment, onDelete: this.deleteItem, onOptionSubmit: this.newOption })}
       </div>
     );
   }
 });
 
-const data = [];
-const options = [{id: 0, value: '', text: ''}, {id: 1, value: 'Arvo1', text: 'Arvo1'}, 
-                {id: 2, value: 'Arvo2', text: 'Arvo2'}, {id: 3, value: 'Arvo3', text: 'Arvo3'}];
+ReactDOM.render((
+  <Router>
+    <Route component={App}>
+      <Route path="/" component={ItemForm} />
+      <Route path="tallentaminen" component={ItemForm} />
+      <Route path="hallitseminen" component={OptionForm} />
+      <Route path="tarkasteleminen" component={ItemList} />
+    </Route>
+  </Router>
+), document.getElementById('content'));
 
-ReactDOM.render(
-  <App data={data} options={options} />,
-  document.getElementById('content')
-);
+/*$('ul li').click( function() {
+  $(this).addClass('active').siblings().removeClass('active');
+});*/

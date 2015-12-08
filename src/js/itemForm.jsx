@@ -55,6 +55,7 @@ var ItemForm = React.createClass({
   },
   deleteItem(item){
     this.state.data.splice(this.state.data.indexOf(item), 1);
+    this.setState({data: this.state.data});
     this.props.onDelete(item);
   },
   componentDidMount() {
@@ -86,7 +87,6 @@ var ItemForm = React.createClass({
         />
         <button className="btn btn-default" type="submit">Tallenna</button>
       </form>
-      <h2> Tallennetut </h2>
       <ItemList data={this.state.data} onDelete={this.deleteItem} deletable={true} />
       </div>
     );
