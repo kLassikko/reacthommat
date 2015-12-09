@@ -1,8 +1,8 @@
 import OptionForm from './optionForm.jsx';
 import ItemList from './itemList.jsx';
 import ItemForm from './itemForm.jsx';
-import { Router, Route, Link } from 'react-router';
-import createHistory from 'history/lib/createHashHistory';
+import { Router, Route, Link, Redirect } from 'react-router';
+import { createHashHistory } from 'history';
 
 var App = React.createClass({
   newComment(comment){
@@ -40,9 +40,9 @@ var App = React.createClass({
             </div>
             <div id="navbar" className="collapse navbar-collapse">
               <ul className="nav navbar-nav">
-                <li><Link to="/tallentaminen" activeClassName="active">tallentaminen</Link></li>
-                <li><Link to="/hallitseminen" activeClassName="active">hallitseminen</Link></li>
-                <li><Link to="/tarkasteleminen" activeClassName="active">tarkasteleminen</Link></li>
+                <li><Link to="/tallentaminen" activeClassName="active" id="lol">tallentaminen</Link></li>
+                <li><Link to="/hallitseminen" activeClassName="active" id="lol">hallitseminen</Link></li>
+                <li><Link to="/tarkasteleminen" activeClassName="active" id="lol">tarkasteleminen</Link></li>
               </ul>
             </div>
           </div>
@@ -54,17 +54,18 @@ var App = React.createClass({
   }
 });
 
+//clean up the urls
+var history = createHashHistory({
+  queryKey: false
+});
+
 ReactDOM.render((
-  <Router>
+  <Router history={history}>
     <Route component={App}>
-      <Route path="/" component={ItemForm} />
-      <Route path="tallentaminen" component={ItemForm} />
-      <Route path="hallitseminen" component={OptionForm} />
-      <Route path="tarkasteleminen" component={ItemList} />
+      <Redirect from="/" to="/tallentaminen"/>
+      <Route path="/tallentaminen" component={ItemForm} />
+      <Route path="/hallitseminen" component={OptionForm} />
+      <Route path="/tarkasteleminen" component={ItemList} />
     </Route>
   </Router>
 ), document.getElementById('content'));
-
-/*$('ul li').click( function() {
-  $(this).addClass('active').siblings().removeClass('active');
-});*/
